@@ -41,41 +41,32 @@ class HomeController extends GetxController {
     });
     socket?.connect();
     socket?.onConnect((_) {
-      print('Connection established');
+      kPrint('Connection established');
     });
 
     socket?.on('message', (data) {
-      print('Received message: $data');
+      kPrint('Received message: $data');
       // Handle the received message here
     });
 
-    // Set up the event handler for 'chatHistory'
-    socket?.on('chatHistory', (chatHistory) {
-      List<ChatMessage> historyMessages = (chatHistory as List).map((message) {
-        return ChatMessage(
-          text: message['message'],
-          sender: message['sender'],
-        );
-      }).toList();
-
-      // Update your chatMessages list with the chat history
-      chatMessages.value = historyMessages;
-    });
-
-    socket?.onDisconnect((_) => print('Connection Disconnection'));
-    socket?.onConnectError((err) => print(err));
-    socket?.onError((err) => print(err));
+    socket?.onDisconnect((_) => kPrint('Connection Disconnection'));
+    socket?.onConnectError((err) => kPrint(err));
+    socket?.onError((err) => kPrint(err));
   }
 
-  sendMessageToServer(String messageText, String id) {
-    socket?.emit('sendMessage', {'roomId': "123$id", 'message': messageText});
+  void sendMessageToServer(String roomId, String message, Users user) {
+    socket?.emit(
+        'sendMessage', {'roomId': roomId, 'message': message, 'user': user});
   }
 
   void onSendMessagePressed(String messageText1, String id, Users user) {
-    String messageText = chatController.text
-        .trim(); // Get the message text from the input field or widget.
-    sendMessageToServer(messageText1, id); // Send the message to the server.
+    String messageText = chatController.text.trim(); // G
 
+    String roomId = "123$id";
+    sendMessageToServer(
+        roomId, messageText1, user); // Send the message to the server.
+    print("user instance:: ${user.id}");
+    print("user instance:: ${user.name}");
     // Update the UI to display the sent message.
     ChatMessage sentMessage = ChatMessage(text: messageText, sender: user);
 
@@ -93,13 +84,33 @@ class HomeController extends GetxController {
   }
 
   void getChatHistory() {
+    loader.value = true;
     // Emit an event to request chat history from the server
+
+    socket?.on('chatHistory', (chatHistory) {
+      kPrint("chat history chatHistory:: $chatHistory");
+
+      List<ChatMessage> historyMessages = (chatHistory as List).map((message) {
+        kPrint("Sender data:: ${message['sender']}");
+        return ChatMessage(
+          text: message['message'] ?? "",
+          sender: message['sender'] ?? Users(),
+        );
+      }).toList();
+
+      // Update your chatMessages list with the chat history
+      chatMessages.value = historyMessages;
+
+      kPrint("chat history data:: $historyMessages");
+      kPrint("chat history data:: ${chatMessages.value}");
+    });
+
     socket?.emit('requestChatHistory');
+    loader.value = false;
   }
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getUserList();
     initSocket();

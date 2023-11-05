@@ -38,6 +38,8 @@ class HomeScreen extends GetView<HomeController> {
 
                             kPrint(
                                 "User Join Room At : 123${controller.userList.value![index].id.toString()}");
+
+                            controller.getChatHistory();
                             Get.to(() => ChatScreen(
                                   user: controller.userList.value![index],
                                 ));
