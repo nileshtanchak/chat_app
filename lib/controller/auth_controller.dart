@@ -53,6 +53,7 @@ class AuthController extends GetxController {
 
       box.write("email", loginModel.value.userData?.email ?? "");
       box.write("name", loginModel.value.userData?.name ?? "");
+      box.write("userId", loginModel.value.userData?.id ?? "");
 
       kPrint("loginModel : ${loginModel.value.userData ?? ""}");
 
