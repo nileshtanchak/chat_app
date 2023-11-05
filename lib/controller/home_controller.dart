@@ -34,6 +34,14 @@ class HomeController extends GetxController {
     loader.value = false;
   }
 
+  String createChatRoomId(String userId1, String userId2) {
+    // Sort user IDs to ensure consistency
+    List<String> sortedIds = [userId1, userId2]..sort();
+
+    // Combine the sorted user IDs to create the room ID
+    return sortedIds.join('_'); // You can use any delimiter you prefer
+  }
+
   initSocket() {
     socket = IO.io(ApiUrl.baseUrl, <String, dynamic>{
       'autoConnect': false,
@@ -55,20 +63,22 @@ class HomeController extends GetxController {
   }
 
   void sendMessageToServer(String roomId, String message, Users user) {
-    socket?.emit(
-        'sendMessage', {'roomId': roomId, 'message': message, 'user': user});
+    socket?.emit('sendMessage', {roomId, message, user});
   }
 
-  void onSendMessagePressed(String messageText1, String id, Users user) {
+  void onSendMessagePressed(
+      String messageText1, String id1, String id2, Users user) {
     String messageText = chatController.text.trim(); // G
 
-    String roomId = "123$id";
+    String roomId = createChatRoomId(id1, id2);
+
     sendMessageToServer(
         roomId, messageText1, user); // Send the message to the server.
     print("user instance:: ${user.id}");
     print("user instance:: ${user.name}");
     // Update the UI to display the sent message.
-    ChatMessage sentMessage = ChatMessage(text: messageText, sender: user);
+    ChatMessage sentMessage =
+        ChatMessage(text: messageText, sender: user.id ?? "");
 
     chatMessages.update((value) {
       value?.add(sentMessage);
@@ -79,7 +89,10 @@ class HomeController extends GetxController {
     chatController.clear();
   }
 
-  void joinChatRoom({required String roomId, required String username}) {
+  void joinChatRoom(
+      {required String id1, required String id2, required String username}) {
+    String roomId = createChatRoomId(id1, id2);
+    kPrint("User Join Room At : $roomId");
     socket?.emit('joinRoom', {'roomId': roomId, 'username': username});
   }
 
@@ -94,7 +107,7 @@ class HomeController extends GetxController {
         kPrint("Sender data:: ${message['sender']}");
         return ChatMessage(
           text: message['message'] ?? "",
-          sender: message['sender'] ?? Users(),
+          sender: message['sender'] ?? "",
         );
       }).toList();
 
@@ -114,15 +127,12 @@ class HomeController extends GetxController {
     super.onInit();
     getUserList();
     initSocket();
-
-    // Request chat history when the screen is loaded
-    getChatHistory();
   }
 }
 
 class ChatMessage {
   final String text;
-  final Users
+  final String
       sender; // Assuming User is another class representing a chat user.
 
   ChatMessage({

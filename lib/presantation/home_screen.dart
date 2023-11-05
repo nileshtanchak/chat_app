@@ -30,14 +30,12 @@ class HomeScreen extends GetView<HomeController> {
                       : GestureDetector(
                           onTap: () {
                             controller.joinChatRoom(
-                                roomId:
-                                    "123${controller.userList.value![index].id.toString()}",
+                                id1: controller.userList.value![index].id
+                                    .toString(),
+                                id2: box.read("userId"),
                                 username:
                                     controller.userList.value![index].name ??
                                         "");
-
-                            kPrint(
-                                "User Join Room At : 123${controller.userList.value![index].id.toString()}");
 
                             controller.getChatHistory();
                             Get.to(() => ChatScreen(

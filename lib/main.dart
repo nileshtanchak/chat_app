@@ -2,6 +2,7 @@ import 'package:first_project_in_mac/presantation/home_screen.dart';
 import 'package:first_project_in_mac/presantation/login_screen.dart';
 import 'package:first_project_in_mac/root_binding/root_binding.dart';
 import 'package:first_project_in_mac/test_screen.dart';
+import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home:
+          box.read("userId") != null ? const HomeScreen() : const LoginScreen(),
     );
   }
 }

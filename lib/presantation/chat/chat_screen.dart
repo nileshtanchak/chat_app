@@ -26,9 +26,12 @@ class ChatScreen extends GetView<HomeController> {
             GestureDetector(
               onTap: () {
                 kPrint("User:: $user");
+                kPrint("User id of chat user:: ${user.id.toString()}");
+                kPrint("User id of login User:: ${box.read("userId")}");
                 controller.onSendMessagePressed(
                     controller.chatController.text.trim(),
                     user.id.toString(),
+                    box.read("userId"),
                     user);
               },
               child: Container(
@@ -57,32 +60,31 @@ class ChatScreen extends GetView<HomeController> {
                       kPrint(
                           "new check list:: ${controller.chatMessages.value.length}");
                       kPrint(
-                          "sender id: ${controller.chatMessages.value[index].sender.id.toString()}");
+                          "sender id: ${controller.chatMessages.value[index].sender.toString()}");
                       kPrint("user id: ${user.id.toString()}");
-                      return Wrap(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Align(
-                              alignment: controller
-                                          .chatMessages.value[index].sender.id
-                                          .toString() !=
-                                      user.id.toString()
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
+                      return Align(
+                        alignment: controller.chatMessages.value[index].sender
+                                    .toString() !=
+                                box.read("userId")
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Wrap(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Text(
                                 controller.chatMessages.value[index].text ??
                                     "dsfsdf",
                                 textAlign: TextAlign.right,
                                 style: const TextStyle(color: Colors.black),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       );
                     },
                   );
