@@ -43,7 +43,7 @@ class RegistrationPage extends GetView<AuthController> {
           Const.customSizedBox(height: 25),
           GestureDetector(
               onTap: () {
-                Get.off(LoginScreen());
+                Get.off(const LoginScreen());
               },
               child: const Center(child: Text("Already Register? Login"))),
         ],
