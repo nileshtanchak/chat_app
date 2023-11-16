@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   TextEditingController chatController = TextEditingController();
   IO.Socket? socket;
   Rx<List<ChatMessage>> chatMessages = Rx<List<ChatMessage>>([]);
-
+  RxBool isLongPress = false.obs;
   Future<void> getUserList() async {
     loader.value = true;
 
@@ -132,11 +132,13 @@ class HomeController extends GetxController {
 
 class ChatMessage {
   final String text;
+  RxBool isSelected;
   final String
       sender; // Assuming User is another class representing a chat user.
 
   ChatMessage({
     required this.text,
     required this.sender,
-  });
+    bool isSelected = false,
+  }) : isSelected = isSelected.obs;
 }
