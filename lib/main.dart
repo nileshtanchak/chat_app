@@ -1,7 +1,6 @@
-import 'package:first_project_in_mac/presantation/home_screen.dart';
-import 'package:first_project_in_mac/presantation/login_screen.dart';
-import 'package:first_project_in_mac/root_binding/root_binding.dart';
-import 'package:first_project_in_mac/test_screen.dart';
+import 'package:first_project_in_mac/presantation/home/home_screen.dart';
+import 'package:first_project_in_mac/presantation/auth/login_screen.dart';
+import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -24,11 +23,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'ChatApp',
       debugShowCheckedModeBanner: false,
-      initialBinding: RootBindings(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      initialRoute: AppPages.HOME,
+      getPages: AppPages.routes,
       home:
           box.read("userId") != null ? const HomeScreen() : const LoginScreen(),
     );

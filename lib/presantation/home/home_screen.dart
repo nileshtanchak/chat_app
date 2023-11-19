@@ -1,7 +1,9 @@
 import 'dart:ffi';
 
-import 'package:first_project_in_mac/controller/home_controller.dart';
-import 'package:first_project_in_mac/presantation/chat/chat_screen.dart';
+import 'package:first_project_in_mac/presantation/home/chat/chat_screen.dart';
+import 'package:first_project_in_mac/presantation/home/controller/home_controller.dart';
+import 'package:first_project_in_mac/presantation/setting/setting_screen.dart';
+import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,16 @@ class HomeScreen extends GetView<HomeController> {
         appBar: AppBar(
           title: const Text("ChatApp"),
           automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.toNamed(AppPages.SETTINGS);
+                },
+                icon: const Icon(
+                  Icons.settings,
+                  color: Colors.grey,
+                ))
+          ],
         ),
         body: controller.loader.value
             ? const Center(child: CupertinoActivityIndicator())

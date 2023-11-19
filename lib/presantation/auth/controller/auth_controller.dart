@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:first_project_in_mac/http_handler/http_handler.dart';
 import 'package:first_project_in_mac/model/auth_models/login_model.dart';
 import 'package:first_project_in_mac/model/auth_models/registration_model.dart';
-import 'package:first_project_in_mac/presantation/home_screen.dart';
-import 'package:first_project_in_mac/presantation/login_screen.dart';
+import 'package:first_project_in_mac/presantation/home/home_screen.dart';
+import 'package:first_project_in_mac/presantation/auth/login_screen.dart';
+import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/api_url.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +32,7 @@ class AuthController extends GetxController {
           RegisterModel.fromJson(jsonDecode(responseModel.data ?? ""));
       kPrint("registration : ${registerModel.value?.user ?? ""}");
 
-      Get.off(const LoginScreen());
+      Get.offNamed(AppPages.LOGIN);
     } else {
       kPrint("registration else");
     }
@@ -57,7 +58,7 @@ class AuthController extends GetxController {
 
       kPrint("loginModel : ${loginModel.value.userData ?? ""}");
 
-      Get.off(const HomeScreen());
+      Get.offNamed(AppPages.HOME);
     } else {
       kPrint("registration else");
     }

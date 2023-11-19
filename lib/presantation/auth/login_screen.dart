@@ -1,6 +1,7 @@
-import 'package:first_project_in_mac/controller/auth_controller.dart';
-import 'package:first_project_in_mac/presantation/home_screen.dart';
-import 'package:first_project_in_mac/presantation/registration_page.dart';
+import 'package:first_project_in_mac/presantation/auth/controller/auth_controller.dart';
+import 'package:first_project_in_mac/presantation/home/home_screen.dart';
+import 'package:first_project_in_mac/presantation/auth/registration_page.dart';
+import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,7 @@ class LoginScreen extends GetView<AuthController> {
           Const.customSizedBox(height: 25),
           GestureDetector(
               onTap: () {
-                Get.off(const RegistrationPage());
+                Get.offNamed(AppPages.REGISTER);
               },
               child: Center(child: const Text("First Time? Register"))),
         ],

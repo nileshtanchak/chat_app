@@ -1,5 +1,6 @@
-import 'package:first_project_in_mac/controller/auth_controller.dart';
-import 'package:first_project_in_mac/presantation/login_screen.dart';
+import 'package:first_project_in_mac/presantation/auth/controller/auth_controller.dart';
+import 'package:first_project_in_mac/presantation/auth/login_screen.dart';
+import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,7 @@ class RegistrationPage extends GetView<AuthController> {
           Const.customSizedBox(height: 25),
           GestureDetector(
               onTap: () {
-                Get.off(LoginScreen());
+                Get.offNamed(AppPages.LOGIN);
               },
               child: const Center(child: Text("Already Register? Login"))),
         ],
