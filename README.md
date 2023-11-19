@@ -1,4 +1,3 @@
-
 # first_project_in_mac
 
 A new Flutter project.

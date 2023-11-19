@@ -1,5 +1,5 @@
-import 'package:first_project_in_mac/presantation/home/home_screen.dart';
 import 'package:first_project_in_mac/presantation/auth/login_screen.dart';
+import 'package:first_project_in_mac/presantation/home/home_screen.dart';
 import 'package:first_project_in_mac/root_binding/app_pages.dart';
 import 'package:first_project_in_mac/utils/const.dart';
 import 'package:flutter/material.dart';
